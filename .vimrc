@@ -1,6 +1,8 @@
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
+" To install run PlugInstall
+" https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 
 
@@ -20,7 +22,7 @@ Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 " Themes
 Plug 'https://github.com/vim-scripts/peaksea' 
 Plug 'https://github.com/joshdick/onedark.vim'
-
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
 "Layout
 Plug 'https://github.com/itchyny/lightline.vim'
 
@@ -119,13 +121,6 @@ set si "Smart indent
 set wrap "Wrap lines
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable 
-set background=dark
-colorscheme onedark
 
 """"""""""""""""""""""""""""""
 " => NERDTree
@@ -135,28 +130,15 @@ map <C-b> :NERDTreeToggle<CR>
 let g:NERDTreeIgnore = ['^node_modules$']
 
 """"""""""""""""""""""""""""""
-" => lightline
+" => Theme
 """"""""""""""""""""""""""""""
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ ['mode', 'paste'],
-      \             ['fugitive', 'readonly', 'filename', 'modified'] ],
-      \   'right': [ [ 'lineinfo' ], ['percent'] ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-      \ },
-      \ 'separator': { 'left': ' ', 'right': ' ' },
-      \ 'subseparator': { 'left': ' ', 'right': ' ' }
-      \ }
+syntax enable 
+set number
+
+set t_Co=256
+set cursorline
+colorscheme onehalflight
+let g:airline_theme='onehalfdark'
 
 """"""""""""""""""""""""""""""
 " => COC
@@ -171,7 +153,10 @@ let g:coc_global_extensions = [
   \ 'coc-json', 
   \ ]
 
+
+" Always use prettier and format on save
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+autocmd BufWritePost * Prettier
 
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
@@ -247,6 +232,8 @@ nmap <leader>f  <Plug>(coc-format-selected)
 " => CTRL-P
 """"""""""""""""""""""""""""""
 let g:ctrlp_working_path_mode = 0
+
+" Ignore git and gitingored files
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 let g:ctrlp_max_height = 20
