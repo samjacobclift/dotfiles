@@ -20,12 +20,10 @@ Plug 'https://github.com/vim-scripts/bufexplorer.zip'
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 
 " Themes
-Plug 'https://github.com/vim-scripts/peaksea' 
-Plug 'https://github.com/joshdick/onedark.vim'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'https://github.com/rakr/vim-one'
+
 "Layout
 Plug 'https://github.com/itchyny/lightline.vim'
-
 
 " Initialize plugin system
 call plug#end()
@@ -134,11 +132,12 @@ let g:NERDTreeIgnore = ['^node_modules$']
 """"""""""""""""""""""""""""""
 syntax enable 
 set number
-
-set t_Co=256
 set cursorline
-colorscheme onehalflight
-let g:airline_theme='onehalfdark'
+
+let g:airline_theme='one'
+colorscheme one
+set background=dark " for the dark version
+" set background=light " for the light version
 
 """"""""""""""""""""""""""""""
 " => COC
